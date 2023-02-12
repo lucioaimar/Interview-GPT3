@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Interview {
+  id               Int        @id @default(autoincrement())
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @default(now()) @updatedAt
+  title            String     @db.VarChar(255)
+  framework        Framework  @relation(fields: [frameworkId], references: [id])
+  seniority        Seniority  @relation(fields: [seniorityId], references: [id])
+  questionNumber   Int
+  frameworkId      Int
+  seniorityId      Int
+  questions        Question[]
+  prompt           String
+  interviewerName  String     @db.VarChar(255)
+  interviewerImage String     @db.VarChar(500)
+  finalAssesment   String?
+  userEmail        String     @db.VarChar(255)
+}
+
+model Question {
+  id                Int       @id @default(autoincrement())
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  content           String    @db.VarChar(500)
+  answer            String?   @db.VarChar(500)
+  correct           Boolean?
+  interviewerAnswer String?   @db.VarChar(500)
+  interview         Interview @relation(fields: [interviewId], references: [id])
+  interviewId       Int
+}
+
+model Framework {
+  id        Int         @id @default(autoincrement())
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now()) @updatedAt
+  name      String      @unique @db.VarChar(255)
+  image     String      @db.VarChar(255)
+  Interview Interview[]
+}
+
+model Seniority {
+  id        Int         @id @default(autoincrement())
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now()) @updatedAt
+  name      String      @unique @db.VarChar(255)
+  Interview Interview[]
+}
