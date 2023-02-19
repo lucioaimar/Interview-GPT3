@@ -1,10 +1,10 @@
-import type { Question } from ".prisma/client";
 import {
   ArrowDownCircleIcon,
   HandRaisedIcon,
   HandThumbDownIcon,
   HandThumbUpIcon,
 } from "@heroicons/react/24/solid";
+import type { Question } from "@prisma/client";
 import { Accordion, Button, Label, Textarea } from "flowbite-react";
 import type { RefObject } from "react";
 import { createRef, Fragment, useEffect, useState } from "react";

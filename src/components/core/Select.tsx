@@ -1,4 +1,4 @@
-import type { Framework, Seniority } from ".prisma/client";
+import type { Framework, Seniority } from "@prisma/client";
 import { Dropdown } from "flowbite-react";
 import React, { useState } from "react";
 import { Loader } from "./Loader";

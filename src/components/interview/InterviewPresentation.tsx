@@ -1,8 +1,8 @@
-import { Framework, Interview, Question, Seniority } from ".prisma/client";
 import { Card } from "flowbite-react";
 import Link from "next/link";
 import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/solid";
 import { QuestionRow } from "./QuestionRow";
+import type { Interview, Framework, Seniority, Question } from "@prisma/client";
 
 export const InterviewPresentation = ({
   interview,
