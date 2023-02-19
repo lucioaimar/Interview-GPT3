@@ -1,5 +1,4 @@
 import { Card, Spinner } from "flowbite-react";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 import { Tag } from "~/components/core/Tag";
@@ -84,8 +83,12 @@ export default function InterviewPage() {
                 </div>
                 {interviewQuery.data?.questions && (
                   <QuestionsAccordion
-                    callbackAskForAnswer={callbackAskForAnswer}
-                    callbackQuestion={callbackFunction}
+                    callbackAskForAnswer={() => {
+                      void callbackAskForAnswer;
+                    }}
+                    callbackQuestion={() => {
+                      void callbackFunction;
+                    }}
                     questions={interviewQuery.data?.questions}
                     interviewerName={interviewQuery.data.interviewerName}
                   />
