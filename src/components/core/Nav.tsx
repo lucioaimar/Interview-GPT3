@@ -1,7 +1,6 @@
-import { useUser } from '@auth0/nextjs-auth0/client';
-import { Navbar, Avatar, Dropdown } from 'flowbite-react';
-import Link from 'next/link';
-import { LoginButton } from './AuthButton';
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { Navbar, Avatar, Dropdown } from "flowbite-react";
+import { LoginButton } from "./AuthButton";
 
 export const Nav = () => {
   const { user, error, isLoading } = useUser();
@@ -9,7 +8,7 @@ export const Nav = () => {
   if (isLoading) return <div>Loading...</div>;
 
   const handleSignOut = () => {
-    window.location.href = '/api/auth/logout';
+    window.location.href = "/api/auth/logout";
   };
 
   return (
@@ -36,7 +35,7 @@ export const Nav = () => {
             label={
               <Avatar
                 alt="User settings"
-                img={user.picture || ''}
+                img={user.picture || ""}
                 rounded={true}
               />
             }

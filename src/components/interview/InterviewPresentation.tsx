@@ -1,8 +1,8 @@
-import { Framework, Interview, Question, Seniority } from '.prisma/client';
-import { Card } from 'flowbite-react';
-import Link from 'next/link';
-import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/solid';
-import { QuestionRow } from './QuestionRow';
+import { Framework, Interview, Question, Seniority } from ".prisma/client";
+import { Card } from "flowbite-react";
+import Link from "next/link";
+import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/solid";
+import { QuestionRow } from "./QuestionRow";
 
 export const InterviewPresentation = ({
   interview,
@@ -16,7 +16,7 @@ export const InterviewPresentation = ({
   return (
     <div className="max-w-2xl">
       <Card>
-        <div className="p-5 flex flex-col gap-5">
+        <div className="flex flex-col gap-5 p-5">
           <h2 className="text-3xl">{interview.title}</h2>
           <div className="grid grid-cols-2">
             <div>
@@ -38,7 +38,7 @@ export const InterviewPresentation = ({
             </div>
           </div>
           Hi I&apos;m {interview.interviewerName} and I will be your interviewer
-          for the {interview.seniority.name} {interview.framework.name}{' '}
+          for the {interview.seniority.name} {interview.framework.name}{" "}
           interview. I will ask you {interview.questions.length} questions. Good
           luck!
           <ul>
@@ -49,11 +49,11 @@ export const InterviewPresentation = ({
             ))}
           </ul>
           <Link
-            className="bg-blue-400 hover:bg-blue-800 hover:text-white p-2 rounded border border-blue-800 w-fit flex items-center gap-2"
-            href={'/interview/' + interview.id}
+            className="flex w-fit items-center gap-2 rounded border border-blue-800 bg-blue-400 p-2 hover:bg-blue-800 hover:text-white"
+            href={`/interview/${interview.id}`}
           >
             Answer the questions
-            <ArrowRightOnRectangleIcon className="w-5 h-5" />
+            <ArrowRightOnRectangleIcon className="h-5 w-5" />
           </Link>
         </div>
       </Card>

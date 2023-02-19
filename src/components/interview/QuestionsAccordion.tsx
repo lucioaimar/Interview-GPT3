@@ -1,27 +1,28 @@
-import { Question } from '.prisma/client';
+import type { Question } from ".prisma/client";
 import {
   ArrowDownCircleIcon,
   HandRaisedIcon,
   HandThumbDownIcon,
   HandThumbUpIcon,
-} from '@heroicons/react/24/solid';
-import { Accordion, Button, Label, Textarea } from 'flowbite-react';
-import { createRef, Fragment, RefObject, useEffect, useState } from 'react';
+} from "@heroicons/react/24/solid";
+import { Accordion, Button, Label, Textarea } from "flowbite-react";
+import type { RefObject } from "react";
+import { createRef, Fragment, useEffect, useState } from "react";
 
 type QuestionAccordionProps = {
   questions: Question[];
   interviewerName: string;
-  callbackQuestion: (questionId: number, answer: string) => any;
-  callbackAskForAnswer: (questionId: number) => any;
+  callbackQuestion: (questionId: number, answer: string) => void;
+  callbackAskForAnswer: (questionId: number) => void;
 };
 
 function getColor(correct: boolean | null) {
   if (correct) {
-    return 'success';
+    return "success";
   } else if (correct === false) {
-    return 'danger';
+    return "danger";
   }
-  return 'primary';
+  return "primary";
 }
 
 export const QuestionsAccordion = ({
@@ -50,12 +51,12 @@ export const QuestionsAccordion = ({
             <div className="flex">
               {question.correct !== null ? (
                 question.correct ? (
-                  <HandThumbUpIcon className="w-5 h-5 mr-2" />
+                  <HandThumbUpIcon className="mr-2 h-5 w-5" />
                 ) : (
-                  <HandThumbDownIcon className="w-5 h-5 mr-2" />
+                  <HandThumbDownIcon className="mr-2 h-5 w-5" />
                 )
               ) : (
-                <HandRaisedIcon className="w-5 h-5 mr-2" />
+                <HandRaisedIcon className="mr-2 h-5 w-5" />
               )}
 
               {question.content}
@@ -83,7 +84,7 @@ export const QuestionsAccordion = ({
                     onClick={() => {
                       callbackQuestion(
                         question.id,
-                        refs?.get(question.id)?.current?.value || '',
+                        refs?.get(question.id)?.current?.value || ""
                       );
                     }}
                   >
@@ -101,20 +102,20 @@ export const QuestionsAccordion = ({
               </Fragment>
             )}
             {question.answer && (
-              <div className="p-3 mb-3 rounded-lg border border-info bg-infoBg">
-                <h5 className="mb-2 text-md font-medium">Your answer</h5>
+              <div className="mb-3 rounded-lg border border-info bg-infoBg p-3">
+                <h5 className="text-md mb-2 font-medium">Your answer</h5>
                 {question.answer}
               </div>
             )}
             {question.interviewerAnswer && (
               <div
-                className={`p-3 rounded-lg border ${
+                className={`rounded-lg border p-3 ${
                   question.correct
-                    ? 'border-success bg-successBg'
-                    : 'border-danger bg-dangerBg'
+                    ? "border-success bg-successBg"
+                    : "border-danger bg-dangerBg"
                 }`}
               >
-                <h5 className="mb-2 text-md font-medium">{`${interviewerName}'s answer`}</h5>
+                <h5 className="text-md mb-2 font-medium">{`${interviewerName}'s answer`}</h5>
                 {question.interviewerAnswer}
               </div>
             )}

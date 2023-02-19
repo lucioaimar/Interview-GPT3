@@ -1,6 +1,6 @@
-import { Card } from 'flowbite-react';
-import Link from 'next/link';
-import { Tag } from '../core/Tag';
+import { Card } from "flowbite-react";
+import Link from "next/link";
+import { Tag } from "../core/Tag";
 
 export type InterviewRowProps = {
   interview: InterviewForRow;
@@ -24,10 +24,10 @@ export type InterviewForRow = {
 
 export const InterviewRow = ({ interview }: InterviewRowProps) => {
   return (
-    <Link href={'/interview/' + interview.id}>
-      <Card className="hover:bg-sky-100 cursor-pointer">
-        <div className="flex flex-row  justify-between items-center w-[50rem]">
-          <div className="text-lg font-medium font-primary w-36">
+    <Link href={`/interview/${interview.id}`}>
+      <Card className="cursor-pointer hover:bg-sky-100">
+        <div className="flex w-[50rem]  flex-row items-center justify-between">
+          <div className="font-primary w-36 text-lg font-medium">
             {interview.title}
           </div>
           <Tag label="Tech" color="primary">

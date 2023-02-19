@@ -7,9 +7,11 @@ export type TagProps = {
 export const Tag = ({ label, children, color }: TagProps) => {
   return (
     <span
-      className={`flex items-center h-fit w-fit px-4 py-2 rounded-full border border-${color} text-${color}`}
+      className={`flex h-fit w-fit items-center rounded-full border px-4 py-2 border-${
+        color || ""
+      } text-${color || ""}`}
     >
-      <span className={`font-medium mr-2 text-${color}`}>{label} |</span>
+      <span className={`mr-2 font-medium text-${color || ""}`}>{label} |</span>
       {children}
     </span>
   );

@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
-import { Nav } from './Nav';
+import type { ReactNode } from "react";
+import { Nav } from "./Nav";
 
 type DefaultLayoutProps = { children: ReactNode };
 

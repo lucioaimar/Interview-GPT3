@@ -1,7 +1,7 @@
-import { Framework, Seniority } from '.prisma/client';
-import { Dropdown } from 'flowbite-react';
-import React, { useState } from 'react';
-import { Loader } from './Loader';
+import type { Framework, Seniority } from ".prisma/client";
+import { Dropdown } from "flowbite-react";
+import React, { useState } from "react";
+import { Loader } from "./Loader";
 
 interface Props<T> {
   data: T[];
@@ -11,7 +11,7 @@ interface Props<T> {
 }
 
 export function Select<
-  T extends Framework | Seniority | { id: number; name: string },
+  T extends Framework | Seniority | { id: number; name: string }
 >({ data, label, isLoading, onChange }: Props<T>) {
   const [selectedValue, setSelectedValue] = useState<T | null>(null);
 
@@ -24,13 +24,13 @@ export function Select<
     <Dropdown
       fullSized={true}
       label={
-        <div className="w-full flex gap-5">
+        <div className="flex w-full gap-5">
           {data.length > 0 && (
             <React.Fragment>
               <p className="text-md">
                 {selectedValue ? selectedValue.name : label}
               </p>
-              {selectedValue && 'image' in selectedValue && (
+              {selectedValue && "image" in selectedValue && (
                 <img
                   width="20"
                   height="20"
@@ -41,7 +41,7 @@ export function Select<
               )}
             </React.Fragment>
           )}
-          {isLoading && <Loader size={'sm'} />}
+          {isLoading && <Loader size={"sm"} />}
         </div>
       }
     >
@@ -52,9 +52,9 @@ export function Select<
             key={item.id}
             value={item.id}
           >
-            <div className="w-full flex gap-5">
+            <div className="flex w-full gap-5">
               <p className="text-xl">{item.name}</p>
-              {'image' in item && (
+              {"image" in item && (
                 <img
                   width="30"
                   height="30"

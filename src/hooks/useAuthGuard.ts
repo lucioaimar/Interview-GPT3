@@ -8,7 +8,7 @@ export function useAuthGuard() {
 
   useEffect(() => {
     if (!isLoading && !user) {
-      router.replace('/');
+      void router.replace('/');
     }
   }, [isLoading, user, router]);
 }
