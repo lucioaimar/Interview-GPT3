@@ -80,7 +80,7 @@ export const QuestionsAccordion = ({
                 <div className="flex">
                   <Button
                     className="my-3 mr-3"
-                    /* disabled={!refs?.get(question.id)?.current?.value} */
+                    disabled={!refs?.get(question.id)?.current?.value}
                     onClick={() => {
                       callbackQuestion(
                         question.id,
@@ -115,7 +115,7 @@ export const QuestionsAccordion = ({
                     : "border-danger bg-dangerBg"
                 }`}
               >
-                <h5 className="text-md mb-2 font-medium">{`${interviewerName}'s answer`}</h5>
+                <h5 className="text-md mb-2 font-medium">{`Interviewer answer`}</h5>
                 {question.interviewerAnswer}
               </div>
             )}

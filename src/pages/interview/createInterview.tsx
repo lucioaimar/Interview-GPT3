@@ -74,73 +74,71 @@ export default function CreateInterviewPage() {
 
   return (
     <>
-      <h1 className="my-10 ml-36 text-3xl">Create Interview</h1>
-      <div className="flex w-full flex-col items-center justify-center gap-5">
-        <Card>
-          <div className="w-[42rem]">
-            <form className="flex flex-col gap-4">
-              <div>
-                <div className="mb-2 block">
-                  <Label htmlFor="title" value="Title" />
-                </div>
-                <TextInput
-                  id="title"
-                  ref={titleInput}
-                  placeholder="Interview name"
-                ></TextInput>
+      <div className="flex flex-col gap-5 w-full justify-center md:p-10">
+        <Card className="w-full md:max-w-6xl">
+          <h1 className="text-3xl">Create Interview</h1>
+          <form className="flex flex-col gap-4">
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="title" value="Title" />
               </div>
-              <div>
-                <div className="block">
-                  <Label htmlFor="selectFramework" value="Framework" />
-                </div>
-                <Select<Framework>
-                  label="Select a framework"
-                  isLoading={frameworks.isLoading}
-                  data={frameworks.data || []}
-                  onChange={setSelectedFramework}
-                ></Select>
+              <TextInput
+                id="title"
+                ref={titleInput}
+                placeholder="Interview name"
+              ></TextInput>
+            </div>
+            <div>
+              <div className="block">
+                <Label htmlFor="selectFramework" value="Framework" />
               </div>
-              <div>
-                <div className="block">
-                  <Label htmlFor="selectSeniority" value="Seniority" />
-                </div>
-                <Select<Seniority>
-                  label="Select a seniority"
-                  isLoading={seniorities.isLoading}
-                  data={seniorities.data || []}
-                  onChange={setSelectedSeniority}
-                ></Select>
+              <Select<Framework>
+                label="Select a framework"
+                isLoading={frameworks.isLoading}
+                data={frameworks.data || []}
+                onChange={setSelectedFramework}
+              ></Select>
+            </div>
+            <div>
+              <div className="block">
+                <Label htmlFor="selectSeniority" value="Seniority" />
               </div>
-              <div>
-                <div className="block">
-                  <Label
-                    htmlFor="selectQuestionNumber"
-                    value="Number of questions"
-                  />
-                </div>
-                <Select<{ id: number; name: string }>
-                  label="Select a number"
-                  isLoading={false}
-                  data={numberOfQuestions}
-                  onChange={(value) => setSelectedNumberOfQuestions(value.id)}
-                ></Select>
+              <Select<Seniority>
+                label="Select a seniority"
+                isLoading={seniorities.isLoading}
+                data={seniorities.data || []}
+                onChange={setSelectedSeniority}
+              ></Select>
+            </div>
+            <div>
+              <div className="block">
+                <Label
+                  htmlFor="selectQuestionNumber"
+                  value="Number of questions"
+                />
               </div>
-              <Button
-                disabled={
-                  !selectedNumberOfQuestions ||
-                  !selectedFramework ||
-                  !selectedSeniority ||
-                  !titleInput.current
-                }
-                className="mt-5"
-                onClick={() => {
-                  void createInterview();
-                }}
-              >
-                Create Interview
-              </Button>
-            </form>
-          </div>
+              <Select<{ id: number; name: string }>
+                label="Select a number"
+                isLoading={false}
+                data={numberOfQuestions}
+                onChange={(value) => setSelectedNumberOfQuestions(value.id)}
+              ></Select>
+            </div>
+            <Button
+              disabled={
+                !selectedNumberOfQuestions ||
+                !selectedFramework ||
+                !selectedSeniority ||
+                !titleInput.current
+              }
+              className="mt-5"
+              onClick={() => {
+                void createInterview();
+              }}
+            >
+              Create Interview
+            </Button>
+          </form>
         </Card>
         {loadingInterviewCreated && <Loader />}
         {interviewCreated && (

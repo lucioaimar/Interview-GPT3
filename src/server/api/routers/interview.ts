@@ -23,10 +23,7 @@ function transformQuestions(questions: string) {
     .slice(1);
 }
 
-async function uploadImageLocally(
-  imageUrl: string,
-  name: string
-): Promise<string> {
+async function uploadImageS3(imageUrl: string, name: string): Promise<string> {
   // This is the local /public/images folder
   const res = await fetch(imageUrl);
   const blob = await res.arrayBuffer();
@@ -42,6 +39,30 @@ async function uploadImageLocally(
   return uploadedImage.Location;
 }
 
+async function getInterviewerImage(interviewerName: string) {
+  const respInterviewerImage = await openai.createImage({
+    prompt: `Give me a realistic style image of an technical interviewer who is called ${interviewerName}`,
+    n: 1,
+    size: "256x256",
+  });
+  const imageUrl = respInterviewerImage.data.data[0]!.url!;
+  const interviewerImage = await uploadImageS3(imageUrl, interviewerName);
+}
+
+async function getInterviewerName() {
+  const respInterviewerName = await openai.createCompletion({
+    model: "text-davinci-003",
+    prompt: "Give me a random name",
+    temperature: 0.5,
+    max_tokens: 20,
+  });
+  const interviewerName = respInterviewerName.data.choices[0]!.text!.replaceAll(
+    "\n",
+    ""
+  );
+  return interviewerName;
+}
+
 const openai = new OpenAIApi(configuration);
 
 export const interviewRouter = createTRPCRouter({
@@ -55,24 +76,6 @@ export const interviewRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      const respInterviewerName = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: "Give me a random name",
-        temperature: 0.5,
-        max_tokens: 20,
-      });
-      const interviewerName =
-        respInterviewerName.data.choices[0]!.text!.replaceAll("\n", "");
-      const respInterviewerImage = await openai.createImage({
-        prompt: `Give me a realistic style image of an technical interviewer who is called ${interviewerName}`,
-        n: 1,
-        size: "256x256",
-      });
-      const imageUrl = respInterviewerImage.data.data[0]!.url!;
-      const interviewerImage = await uploadImageLocally(
-        imageUrl,
-        interviewerName
-      );
       const framework = await prisma.framework.findUnique({
         where: {
           id: input.frameworkId,
@@ -92,7 +95,8 @@ export const interviewRouter = createTRPCRouter({
       }
 
       let prompt = `You are a Technical Interviewer an have to asses a candidate for an ${framework.name} ${seniority.name} 
-      position. Give the candidate ${input.questionNumber} questions. 
+      position. Give the candidate ${input.questionNumber} questions.
+      Try to only ask technical questions about the technology and not questions about experience.
       Respond "I don't care" if they ask something unrelated to the interview.
       Respond if they ask for a more complete answer.`;
       const response = await openai.createCompletion({
@@ -100,9 +104,6 @@ export const interviewRouter = createTRPCRouter({
         prompt,
         temperature: 0.9,
         max_tokens: 200,
-        top_p: 1,
-        frequency_penalty: 0.0,
-        presence_penalty: 0.0,
       });
       const resp = response.data.choices[0]!.text!;
       prompt = prompt + resp;
@@ -114,8 +115,6 @@ export const interviewRouter = createTRPCRouter({
           frameworkId: input.frameworkId,
           seniorityId: input.seniorityId,
           questionNumber: input.questionNumber,
-          interviewerName,
-          interviewerImage,
           prompt,
           questions: {
             createMany: {
@@ -144,33 +143,42 @@ export const interviewRouter = createTRPCRouter({
       }
       return interviewWithQuestions;
     }),
-  getInterviews: protectedProcedure.input(z.void()).query(async ({ ctx }) => {
-    const interviews = await prisma.interview.findMany({
-      where: {
-        userEmail: ctx.user.email as string,
-      },
-      select: {
-        id: true,
-        title: true,
-        questionNumber: true,
-        userEmail: true,
-        frameworkId: true,
-        seniorityId: true,
-        seniority: {
-          select: {
-            name: true,
+  getInterviews: protectedProcedure
+    .input(
+      z.object({
+        pageNumber: z.number(),
+        pageSize: z.number(),
+      })
+    )
+    .query(async ({ input, ctx }) => {
+      const interviews = await prisma.interview.findMany({
+        skip: (input.pageNumber - 1) * input.pageSize,
+        take: input.pageSize,
+        where: {
+          userEmail: ctx.user.email as string,
+        },
+        select: {
+          id: true,
+          title: true,
+          questionNumber: true,
+          userEmail: true,
+          frameworkId: true,
+          seniorityId: true,
+          seniority: {
+            select: {
+              name: true,
+            },
+          },
+          framework: {
+            select: {
+              name: true,
+              image: true,
+            },
           },
         },
-        framework: {
-          select: {
-            name: true,
-            image: true,
-          },
-        },
-      },
-    });
-    return interviews;
-  }),
+      });
+      return interviews;
+    }),
   getInterviewById: protectedProcedure
     .input(z.object({ interviewId: z.number() }))
     .query(async ({ input }) => {

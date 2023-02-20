@@ -24,9 +24,12 @@ export type InterviewForRow = {
 
 export const InterviewRow = ({ interview }: InterviewRowProps) => {
   return (
-    <Link href={`/interview/${interview.id}`}>
+    <Link
+      className="w-full md:min-w-[50rem]"
+      href={`/interview/${interview.id}`}
+    >
       <Card className="cursor-pointer hover:bg-sky-100">
-        <div className="flex w-[50rem]  flex-row items-center justify-between">
+        <div className="flex md:flex-row flex-col gap-5 md:items-center justify-between">
           <div className="font-primary w-36 text-lg font-medium">
             {interview.title}
           </div>

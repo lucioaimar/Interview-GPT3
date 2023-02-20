@@ -22,8 +22,6 @@ model Interview {
     seniorityId      Int
     questions        Question[]
     prompt           String
-    interviewerName  String     @db.VarChar(255)
-    interviewerImage String     @db.VarChar(500)
     finalAssesment   String?
     userEmail        String     @db.VarChar(255)
 }
