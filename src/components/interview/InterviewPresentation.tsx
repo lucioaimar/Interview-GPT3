@@ -35,7 +35,7 @@ export const InterviewPresentation = ({
             {interview.questionNumber}
           </Tag>
         </div>
-        Hi I&apos;m {interview.interviewerName} and I will be your interviewer
+        I will be your interviewer
         for the {interview.seniority.name} {interview.framework.name} interview.
         I will ask you {interview.questions.length} questions. Good luck!
         <ul>

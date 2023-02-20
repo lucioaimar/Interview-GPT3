@@ -1,6 +1,7 @@
 import { Card } from "flowbite-react";
 import Link from "next/link";
 import { Tag } from "../core/Tag";
+import Image from "next/image";
 
 export type InterviewRowProps = {
   interview: InterviewForRow;
@@ -29,14 +30,15 @@ export const InterviewRow = ({ interview }: InterviewRowProps) => {
       href={`/interview/${interview.id}`}
     >
       <Card className="cursor-pointer hover:bg-sky-100">
-        <div className="flex md:flex-row flex-col gap-5 md:items-center justify-between">
+        <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
           <div className="font-primary w-36 text-lg font-medium">
             {interview.title}
           </div>
           <Tag label="Tech" color="primary">
             {interview.framework.name}
-            <img
+            <Image
               width={30}
+              height={30}
               className="ml-2"
               src={interview.framework.image}
               alt="Framework image"

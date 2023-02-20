@@ -1,5 +1,6 @@
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { Card } from "flowbite-react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { Loader } from "~/components/core/Loader";
 import { Tag } from "~/components/core/Tag";
@@ -48,8 +49,9 @@ export default function InterviewPage() {
               </h2>
               <Tag label="Tech" color="primary">
                 {interviewQuery.data.framework.name}
-                <img
+                <Image
                   width={30}
+                  height={30}
                   className="ml-2"
                   src={interviewQuery.data.framework.image}
                   alt="Framework image"
@@ -77,7 +79,6 @@ export default function InterviewPage() {
                     void callbackFunction;
                   }}
                   questions={interviewQuery.data?.questions}
-                  interviewerName={interviewQuery.data.interviewerName}
                 />
               )}
             </div>
@@ -87,7 +88,7 @@ export default function InterviewPage() {
     );
   } else if (interviewQuery.isLoading) {
     return (
-      <div className="mt-5 flex w-full justify-center">
+      <div className="h-screen flex w-full justify-center">
         <Loader />;
       </div>
     );

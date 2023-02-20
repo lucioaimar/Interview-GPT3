@@ -11,7 +11,6 @@ import { createRef, Fragment, useEffect, useState } from "react";
 
 type QuestionAccordionProps = {
   questions: Question[];
-  interviewerName: string;
   callbackQuestion: (questionId: number, answer: string) => void;
   callbackAskForAnswer: (questionId: number) => void;
 };
@@ -27,7 +26,6 @@ function getColor(correct: boolean | null) {
 
 export const QuestionsAccordion = ({
   questions,
-  interviewerName,
   callbackQuestion,
   callbackAskForAnswer,
 }: QuestionAccordionProps) => {
@@ -80,7 +78,6 @@ export const QuestionsAccordion = ({
                 <div className="flex">
                   <Button
                     className="my-3 mr-3"
-                    disabled={!refs?.get(question.id)?.current?.value}
                     onClick={() => {
                       callbackQuestion(
                         question.id,

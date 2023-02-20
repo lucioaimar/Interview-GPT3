@@ -74,7 +74,7 @@ export default function CreateInterviewPage() {
 
   return (
     <>
-      <div className="flex flex-col gap-5 w-full justify-center md:p-10">
+      <div className="flex gap-5 w-full justify-center md:p-10">
         <Card className="w-full md:max-w-6xl">
           <h1 className="text-3xl">Create Interview</h1>
           <form className="flex flex-col gap-4">

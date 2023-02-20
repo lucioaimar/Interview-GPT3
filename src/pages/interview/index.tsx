@@ -14,8 +14,8 @@ export default function CreateInterviewPage() {
   });
 
   return (
-    <div className="flex w-full justify-center p-3 md:max-w-6xl md:p-0">
-      <div>
+    <div className="flex w-full justify-center p-3 md:p-0">
+      <div className="mt-10">
         {data && (
           <div className="mb-5">
             <h1 className="mb-5 text-3xl">My Interviews</h1>

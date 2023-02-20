@@ -54,14 +54,14 @@ export const Nav = () => {
             </Dropdown.Header>
             <Dropdown.Item
               onClick={() => {
-                router.push("/");
+                void router.push("/");
               }}
             >
               Home
             </Dropdown.Item>
             <Dropdown.Item
               onClick={() => {
-                router.push("/interview");
+                void router.push("/interview");
               }}
             >
               My Interviews
