@@ -1,6 +1,6 @@
-import type { Framework, Seniority, Interview, Question } from ".prisma/client";
+import type { Framework, Interview, Question, Seniority } from "@prisma/client";
 import { Button, Card, Label, TextInput } from "flowbite-react";
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { useState } from "react";
 import { Loader } from "~/components/core/Loader";
 import { Select } from "~/components/core/Select";
@@ -74,7 +74,7 @@ export default function CreateInterviewPage() {
 
   return (
     <>
-      <div className="flex gap-5 w-full justify-center md:p-10">
+      <div className="flex w-full justify-center gap-5 md:p-10">
         <Card className="w-full md:max-w-6xl">
           <h1 className="text-3xl">Create Interview</h1>
           <form className="flex flex-col gap-4">
