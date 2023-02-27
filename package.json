@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "postinstall": "prisma generate",
+    "postinstall": "prisma migrate && prisma generate",
     "lint": "next lint",
     "start": "next start",
     "dev": "pnpm migrate-postgres && pnpm generate-postgres && pnpm db-seed && next dev",

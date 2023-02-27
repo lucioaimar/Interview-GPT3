@@ -4,6 +4,7 @@ import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/solid";
 import { QuestionRow } from "./QuestionRow";
 import type { Interview, Framework, Seniority, Question } from "@prisma/client";
 import { Tag } from "../core/Tag";
+import Image from "next/image";
 
 export const InterviewPresentation = ({
   interview,
@@ -21,7 +22,7 @@ export const InterviewPresentation = ({
         <div className="flex flex-col gap-2">
           <Tag label="Tech" color="primary">
             {interview.framework.name}
-            <img
+            <Image
               width={30}
               className="ml-2"
               src={interview.framework.image}

@@ -2,6 +2,7 @@ import type { Framework, Seniority } from "@prisma/client";
 import { Dropdown } from "flowbite-react";
 import React, { useState } from "react";
 import { Loader } from "./Loader";
+import Image from "next/image";
 
 interface Props<T> {
   data: T[];
@@ -31,7 +32,7 @@ export function Select<
                 {selectedValue ? selectedValue.name : label}
               </p>
               {selectedValue && "image" in selectedValue && (
-                <img
+                <Image
                   width="20"
                   height="20"
                   className="ml-auto"
@@ -55,7 +56,7 @@ export function Select<
             <div className="flex w-full gap-5">
               <p className="text-xl">{item.name}</p>
               {"image" in item && (
-                <img
+                <Image
                   width="30"
                   height="30"
                   className="ml-auto"

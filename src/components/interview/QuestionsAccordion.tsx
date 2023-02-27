@@ -32,14 +32,24 @@ export const QuestionsAccordion = ({
   const [refs, setRefs] =
     useState<Map<number, RefObject<HTMLTextAreaElement>>>();
 
+  const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
     const refs = new Map<number, RefObject<HTMLTextAreaElement>>();
     questions.forEach((question) => {
       refs.set(question.id, createRef());
     });
     setRefs(refs);
-    console.log(refs);
   }, [questions]);
+
+  const isAllowed = (value: string | undefined) => {
+    console.log(value);
+    if (!value || value?.length < 10 || value?.length > 200) {
+      setError("Your answer must be between 10 and 200 characters");
+      return false;
+    }
+    return true;
+  };
 
   return (
     <Accordion alwaysOpen={true} arrowIcon={ArrowDownCircleIcon}>
@@ -79,10 +89,13 @@ export const QuestionsAccordion = ({
                   <Button
                     className="my-3 mr-3"
                     onClick={() => {
-                      callbackQuestion(
-                        question.id,
-                        refs?.get(question.id)?.current?.value || ""
-                      );
+                      const textValue = refs?.get(question.id)?.current?.value;
+                      if (isAllowed(textValue)) {
+                        callbackQuestion(
+                          question.id,
+                          refs?.get(question.id)?.current?.value || ""
+                        );
+                      }
                     }}
                   >
                     Answer
@@ -95,6 +108,7 @@ export const QuestionsAccordion = ({
                   >
                     I don&apos;t know
                   </Button>
+                  <div className="text-red-500 ml-3 flex items-center">{error}</div>
                 </div>
               </Fragment>
             )}
