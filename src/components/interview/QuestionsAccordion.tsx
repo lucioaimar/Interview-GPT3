@@ -44,8 +44,8 @@ export const QuestionsAccordion = ({
 
   const isAllowed = (value: string | undefined) => {
     console.log(value);
-    if (!value || value?.length < 10 || value?.length > 200) {
-      setError("Your answer must be between 10 and 200 characters");
+    if (!value || value?.length < 10 || value?.length > 1000) {
+      setError("Your answer must be between 10 and 1000 characters");
       return false;
     }
     return true;
